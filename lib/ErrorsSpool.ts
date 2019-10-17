@@ -25,9 +25,9 @@ export class ErrorsSpool extends ExtensionSpool {
         enumerable: true,
         configurable: true
       },
-      testJoiError: {
+      transformJoiError: {
         get: () => {
-          return this.testJoiError
+          return this.transformJoiError
         },
         set: (newInstances) => {
           throw new Error('hasJoiError can not be set through FabrixApp, check spool-errors instead')
@@ -45,7 +45,7 @@ export class ErrorsSpool extends ExtensionSpool {
     }
   }
 
-  testJoiError(evaluate, errorType?) {
+  transformJoiError(evaluate, errorType?) {
     const { value, error } = evaluate
     errorType = errorType || this.errors.GenericError
 

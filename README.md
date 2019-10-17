@@ -56,7 +56,7 @@ const schema = Joi.object({
 
 const test = schema.validate({})
 
-const { value, error } = this.app.testJoiError(test, TestError)
+const { value, error } = this.app.transformJoiError(test, TestError)
 
 if (error) {
   assert(error instanceof TestError)

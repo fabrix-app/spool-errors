@@ -13,7 +13,7 @@ describe('Spool', () => {
   })
 
 
-  it('should testJoiError', () => {
+  it('should transformJoiError', () => {
     const schema = Joi.object({
       username: Joi.string()
         .alphanum()
@@ -48,7 +48,7 @@ describe('Spool', () => {
 
     const test = schema.validate({})
 
-    const { value, error } = global.app.testJoiError(test)
+    const { value, error } = global.app.transformJoiError(test)
 
     console.log(error.details)
     assert(error.message, 'child "username" fails because ["username" is required]')
@@ -59,7 +59,7 @@ describe('Spool', () => {
     assert.ok(error.details)
   })
 
-  it('should testJoiError with custom error', () => {
+  it('should transformJoiError with custom error', () => {
     const schema = Joi.object({
       username: Joi.string()
         .alphanum()
@@ -94,7 +94,7 @@ describe('Spool', () => {
 
     const test = schema.validate({})
 
-    const { value, error } = global.app.testJoiError(test, global.app.errors.TestError)
+    const { value, error } = global.app.transformJoiError(test, global.app.errors.TestError)
 
     console.log(error.details)
     assert(error.message, 'child "username" fails because ["username" is required]')
