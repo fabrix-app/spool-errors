@@ -33,7 +33,7 @@ export const main = {
 
 You can easily extend the generic errors
 
-```
+```js
 // config/errors.ts
 import { GenericError } from '@fabrix/spool-error/errors'
 export const errors = {
@@ -44,7 +44,7 @@ export const errors = {
 ## Usage
 Use spool-errors to standardize Joi errors
 
-```
+```js
 const schema = Joi.object({
       username: Joi.string()
         .alphanum()
@@ -53,11 +53,17 @@ const schema = Joi.object({
         .required(),
       })
 
+
+const test = schema.validate({})
+
 const { value, error } = this.app.testJoiError(test, TestError)
 
 if (error) {
-  assert(error instancecof TestError)
+  assert(error instanceof TestError)
   throw error
+}
+else {
+  // do something with value
 }
 ```
 
