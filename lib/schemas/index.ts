@@ -1,0 +1,1 @@
+export { errorsConfigSchema } from './errorsConfigSchema'
