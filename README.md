@@ -31,9 +31,33 @@ export const main = {
 
 ## Configuration
 
+You can easily extend the generic errors
+
 ```
 // config/errors.ts
+import { GenericError } from '@fabrix/spool-error/errors'
 export const errors = {
+  TestError: class TestError extends GenericError {}
+}
+```
+
+## Usage
+Use spool-errors to standardize Joi errors
+
+```
+const schema = Joi.object({
+      username: Joi.string()
+        .alphanum()
+        .min(3)
+        .max(30)
+        .required(),
+      })
+
+const { value, error } = this.app.testJoiError(test, TestError)
+
+if (error) {
+  assert(error instancecof TestError)
+  throw error
 }
 ```
 

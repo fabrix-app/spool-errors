@@ -2,19 +2,22 @@ export class GenericError extends Error {
   public code: string
   public statusCode: number | string
   public details: any[]
+  public annotate
 
   constructor(
     code = 'E_UNSPECIFIED',
     message = 'internal error',
     name?,
     details?: any[],
-    statusCode?: number | string
+    statusCode?: number | string,
+    annotate?
   ) {
     super(message)
     this.code = code
     this.name = name || 'Generic Error'
     this.details = details
     this.statusCode = statusCode
+    this.annotate = annotate
 
     if (!this.statusCode) {
       switch (true) {

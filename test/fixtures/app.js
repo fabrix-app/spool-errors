@@ -1,4 +1,5 @@
 'use strict'
+const GenericError = require('../../dist/errors').GenericError
 
 module.exports = {
   pkg: {
@@ -8,7 +9,7 @@ module.exports = {
   },
   config: {
     errors: {
-
+      TestError: class TestError extends GenericError {}
     },
     main: {
       spools: [

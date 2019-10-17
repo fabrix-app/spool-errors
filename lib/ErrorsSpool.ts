@@ -1,6 +1,6 @@
 import { ExtensionSpool } from '@fabrix/fabrix/dist/common/spools/extension'
 import { Utils } from './Utils'
-
+import { errors } from './'
 import * as config from './config/index'
 import * as pkg from '../package.json'
 import * as api  from './api/index'
@@ -15,27 +15,54 @@ export class ErrorsSpool extends ExtensionSpool {
     })
 
     this.extensions = {
-      // validator: {
-      //   get: () => {
-      //     return this.joi
-      //   },
-      //   set: (newInstances) => {
-      //     throw new Error('validator can not be set through FabrixApp, check spool-errors instead')
-      //   },
-      //   enumerable: true,
-      //   configurable: true
-      // },
-      // validate: {
-      //   get: () => {
-      //     return this._validate
-      //   },
-      //   set: (newInstances) => {
-      //     throw new Error('validate can not be set through FabrixApp, check spool-errors instead')
-      //   },
-      //   enumerable: true,
-      //   configurable: true
-      // }
+      errors: {
+        get: () => {
+          return this.errors
+        },
+        set: (newInstances) => {
+          throw new Error('errors can not be set through FabrixApp, check spool-errors instead')
+        },
+        enumerable: true,
+        configurable: true
+      },
+      testJoiError: {
+        get: () => {
+          return this.testJoiError
+        },
+        set: (newInstances) => {
+          throw new Error('hasJoiError can not be set through FabrixApp, check spool-errors instead')
+        },
+        enumerable: true,
+        configurable: true
+      }
     }
+  }
+
+  get errors() {
+    return {
+      ...this.app.config.get('errors'),
+      ...errors
+    }
+  }
+
+  testJoiError(evaluate, errorType?) {
+    const { value, error } = evaluate
+    errorType = errorType || this.errors.GenericError
+
+    if (error) {
+      return {
+        value,
+        error: new errorType(
+          'E_VALIDATION',
+          error.message,
+          error.name,
+          error.details,
+          '400',
+          error.annotate
+        )
+      }
+    }
+    return { value, error }
   }
 
   /**
@@ -47,12 +74,6 @@ export class ErrorsSpool extends ExtensionSpool {
     }
 
     return Promise.resolve()
-    // return Promise.all([
-    //   Utils.validateErrorsConfig(this.app, this.joi, this.app.config.get('errors'))
-    // ])
-    //   .catch(err => {
-    //     return Promise.reject(err)
-    //   })
   }
 
   /**
