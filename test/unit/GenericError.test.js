@@ -21,7 +21,7 @@ describe('GenericError', () => {
     assert(err.message, 'not allowed')
     assert(err.code, 'E_FORBIDDEN')
     assert(err.name, 'Generic Error')
-    assert(err.statusCode, '403')
+    assert(err.statusCode, 403)
   })
 
   it('should throw a 404', () => {
@@ -31,7 +31,7 @@ describe('GenericError', () => {
     assert(err.message, 'not found')
     assert(err.code, 'E_NOT_FOUND')
     assert(err.name, 'Generic Error')
-    assert(err.statusCode, '404')
+    assert(err.statusCode, 404)
   })
 
   it('should throw a 500', () => {
@@ -41,6 +41,6 @@ describe('GenericError', () => {
     assert(err.message, 'internal error')
     assert(err.code, 'E_UNSPECIFIED')
     assert(err.name, 'Generic Error')
-    assert(err.statusCode, '500')
+    assert(err.statusCode, 500)
   })
 })
